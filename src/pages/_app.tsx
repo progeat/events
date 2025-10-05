@@ -3,11 +3,13 @@ import { trpc } from '@/shared/api';
 import { SessionProvider, getSession } from 'next-auth/react';
 
 import '@/app/global.css';
+import { Header } from '@/widgets/header';
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <div className="mx-auto max-w-4xl">
       <SessionProvider session={pageProps.session}>
+        <Header />
         <Component {...pageProps} />
       </SessionProvider>
     </div>
