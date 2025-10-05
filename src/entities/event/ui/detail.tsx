@@ -1,11 +1,17 @@
-import { RouterOutput } from "@/shared/api";
+import { RouterOutput } from '@/shared/api';
+import Link from 'next/link';
 
-type EventDetailProps = NonNullable<RouterOutput["event"]["findUnique"]>;
+type EventDetailProps = NonNullable<RouterOutput['event']['findUnique']> & {
+  eventId: number;
+  isAuthor?: boolean;
+};
 
 export const EventDetail = ({
+  eventId,
   title,
   description,
   date,
+  isAuthor,
   participations,
 }: EventDetailProps) => {
   return (
@@ -14,6 +20,14 @@ export const EventDetail = ({
         <h3 className="text-base font-semibold leading-7 text-gray-900">
           Информация о событии
         </h3>
+        {isAuthor && (
+          <Link
+            className="px-6 font-semibold rounded-md bg-black text-white"
+            href={`/events/${eventId}/edit`}
+          >
+            Редактировать
+          </Link>
+        )}
       </div>
       <div className="mt-6 border-t border-gray-100">
         <dl className="divide-y divide-gray-100">
@@ -46,7 +60,7 @@ export const EventDetail = ({
               Участники
             </dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {participations.map(({ user }) => user.name).join(", ")}
+              {participations.map(({ user }) => user.name).join(', ')}
             </dd>
           </div>
         </dl>
